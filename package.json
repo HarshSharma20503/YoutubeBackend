@@ -3,13 +3,18 @@
   "version": "1.0.0",
   "description": "A backend project to learn Backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
   "keywords": [
     "Javascript",
     "Backend"
   ],
   "author": "Harsh Sharma",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
 }
