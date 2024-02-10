@@ -167,8 +167,8 @@ const logoutUser = asyncHandler(async (req, res) => {
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: {
-                refreshToken: undefined,
+            $unset: {
+                refreshToken: 1, // remove refreshToken from user
             },
         },
         {
@@ -301,6 +301,8 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         throw new ApiError(500, "Something went wrong while uploading avatar");
     }
 
+    fs.unlinkSync(avatarLocalPath);
+
     const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
@@ -334,6 +336,7 @@ const updateUserCoverImage = asyncHandler(async (req, res) => {
         { new: true }
     ).select("-password -refreshToken");
 
+    fs.unlinkSync(coverImageLocalPath);
     return res
         .status(200)
         .json(new ApiResponse(200, user, "coverImage updated"));
